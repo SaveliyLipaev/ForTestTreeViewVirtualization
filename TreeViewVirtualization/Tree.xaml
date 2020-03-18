@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TreeViewVirtualization"
         mc:Ignorable="d"
+        x:Name="Window"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <ResourceDictionary>
@@ -37,6 +38,11 @@
                     </Grid>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Click me" Command="{Binding ClickCommand}"></MenuItem>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
 
     </Grid>
