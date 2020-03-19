@@ -10,7 +10,10 @@
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="TreeViewItem" x:Key="TreeViewItemStyle">
-                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                <!-- Include the two "Scroll into View" behaviors -->
+                <EventSetter Handler="EventSetter_OnHandler" Event="Expanded"></EventSetter>
+
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                 <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                 <Setter Property="FontWeight" Value="Normal" />
                 <Style.Triggers>
@@ -29,7 +32,7 @@
         </Grid.RowDefinitions>
 
         <TreeView Grid.Row="0" x:Name="TreeView" ItemsSource="{Binding TreeNodes}" ItemContainerStyle="{StaticResource TreeViewItemStyle}"
-                  VirtualizingStackPanel.IsVirtualizing ="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                  ScrollViewer.CanContentScroll="True">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}"
                                           DataType="{x:Type local:ITreeNode}">
