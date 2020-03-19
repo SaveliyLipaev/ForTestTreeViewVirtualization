@@ -1,6 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using GalaSoft.MvvmLight.Command;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using TreeViewVirtualization.Annotations;
 
 namespace TreeViewVirtualization
@@ -46,6 +49,16 @@ namespace TreeViewVirtualization
       _rootNode.IsExpanded = true;
     }
 
+    public ICommand ClickCommand => new RelayCommand<object>(click);
+
+    private void click(object obj)
+    {
+      ITreeNode selected = TreeNodes.FirstOrDefault()?.Children.FirstOrDefault(node => node.Id == 1500 && node.Parent != null && node.Children != null && node.Children.Any());
+      if (selected != null)
+      {
+        selected.IsExpanded = true;
+      }
+    }
 
 
     public event PropertyChangedEventHandler PropertyChanged;

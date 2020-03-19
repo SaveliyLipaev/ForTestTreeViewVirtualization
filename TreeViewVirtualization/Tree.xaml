@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TreeViewVirtualization"
         mc:Ignorable="d"
+        x:Name="Window"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="TreeViewItem" x:Key="TreeViewItemStyle">
-                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+                <!-- Include the two "Scroll into View" behaviors -->
+                <EventSetter Handler="EventSetter_OnHandler" Event="Expanded"></EventSetter>
+
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                 <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                 <Setter Property="FontWeight" Value="Normal" />
                 <Style.Triggers>
@@ -28,7 +32,7 @@
         </Grid.RowDefinitions>
 
         <TreeView Grid.Row="0" x:Name="TreeView" ItemsSource="{Binding TreeNodes}" ItemContainerStyle="{StaticResource TreeViewItemStyle}"
-                  VirtualizingStackPanel.IsVirtualizing ="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                  ScrollViewer.CanContentScroll="True">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}"
                                           DataType="{x:Type local:ITreeNode}">
@@ -37,6 +41,11 @@
                     </Grid>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Click me" Command="{Binding ClickCommand}"></MenuItem>
+                </ContextMenu>
+            </TreeView.ContextMenu>
         </TreeView>
 
     </Grid>

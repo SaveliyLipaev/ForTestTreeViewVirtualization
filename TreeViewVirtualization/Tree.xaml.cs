@@ -25,5 +25,25 @@ namespace TreeViewVirtualization
       InitializeComponent();
       DataContext = new TreeViewModel();
     }
+
+    private void EventSetter_OnHandler(object sender, RoutedEventArgs e)
+    {
+      // ignore checking, assume original source is treeviewitem
+      var treeViewItem = (TreeViewItem)e.OriginalSource;
+      if ((treeViewItem.DataContext as ITreeNode).Id == 0)
+      {
+        return;
+      }
+      var count = VisualTreeHelper.GetChildrenCount(treeViewItem);
+
+      for (int i = count - 1; i >= 0; --i)
+      {
+        var childItem = VisualTreeHelper.GetChild(treeViewItem, i);
+        ((FrameworkElement)childItem).BringIntoView();
+      }
+
+      // do NOT call BringIntoView on the actual treeviewitem - this negates everything
+      //treeViewItem.BringIntoView(); }; }
+    }
   }
 }

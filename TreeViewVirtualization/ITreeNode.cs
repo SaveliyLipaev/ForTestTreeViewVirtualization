@@ -1,10 +1,16 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace TreeViewVirtualization
 {
   interface ITreeNode
   {
-    ObservableCollection<ITreeNode> Children { get; set; }
     string Key { get; set; }
+    TreeNode Parent { get; set; }
+    int Id { get; set; }
+    bool IsExpanded { get; set; }
+    bool IsSelected { get; set; }
+    ObservableCollection<ITreeNode> Children { get; set; }
+    event PropertyChangedEventHandler PropertyChanged;
   }
 }
