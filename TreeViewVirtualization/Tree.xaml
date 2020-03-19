@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TreeViewVirtualization"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         x:Name="Window"
         Title="MainWindow" Height="450" Width="800">
@@ -14,7 +15,6 @@
                 <EventSetter Handler="EventSetter_OnHandler" Event="Expanded"></EventSetter>
 
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                 <Setter Property="FontWeight" Value="Normal" />
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
@@ -32,7 +32,8 @@
         </Grid.RowDefinitions>
 
         <TreeView Grid.Row="0" x:Name="TreeView" ItemsSource="{Binding TreeNodes}" ItemContainerStyle="{StaticResource TreeViewItemStyle}"
-                  ScrollViewer.CanContentScroll="True">
+                  VirtualizingStackPanel.IsVirtualizing="True"
+                  VirtualizingStackPanel.VirtualizationMode="Recycling">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}"
                                           DataType="{x:Type local:ITreeNode}">
@@ -41,6 +42,9 @@
                     </Grid>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
+            <i:Interaction.Behaviors>
+                <local:NodeTreeSelectionBehavior SelectedItem="{Binding MySelectedItem}" />
+            </i:Interaction.Behaviors>
             <TreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Click me" Command="{Binding ClickCommand}"></MenuItem>

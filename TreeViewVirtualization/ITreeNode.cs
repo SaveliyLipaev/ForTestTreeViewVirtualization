@@ -9,7 +9,6 @@ namespace TreeViewVirtualization
     TreeNode Parent { get; set; }
     int Id { get; set; }
     bool IsExpanded { get; set; }
-    bool IsSelected { get; set; }
     ObservableCollection<ITreeNode> Children { get; set; }
     event PropertyChangedEventHandler PropertyChanged;
   }

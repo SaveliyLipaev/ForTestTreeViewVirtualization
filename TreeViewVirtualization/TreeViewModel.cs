@@ -29,6 +29,23 @@ namespace TreeViewVirtualization
       }
     }
 
+    private TreeNode _mySelectedItem;
+    public TreeNode MySelectedItem
+    {
+      get
+      {
+        return _mySelectedItem;
+      }
+      set
+      {
+        if (_mySelectedItem != value)
+        {
+          _mySelectedItem = value;
+          OnPropertyChanged();
+        }
+      }
+    }
+
     public TreeViewModel()
     {
       int id = 1;
@@ -56,7 +73,7 @@ namespace TreeViewVirtualization
       ITreeNode selected = TreeNodes.FirstOrDefault()?.Children.FirstOrDefault(node => node.Id == 1500 && node.Parent != null && node.Children != null && node.Children.Any());
       if (selected != null)
       {
-        selected.IsExpanded = true;
+        MySelectedItem = selected as TreeNode;
       }
     }
 
