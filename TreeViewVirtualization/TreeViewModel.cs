@@ -71,6 +71,7 @@ namespace TreeViewVirtualization
     private void click(object obj)
     {
       ITreeNode selected = TreeNodes.FirstOrDefault()?.Children.FirstOrDefault(node => node.Id == 1500 && node.Parent != null && node.Children != null && node.Children.Any());
+      selected = selected.Children[500];
       if (selected != null)
       {
         MySelectedItem = selected as TreeNode;
